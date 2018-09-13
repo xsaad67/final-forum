@@ -8,6 +8,10 @@ use App\Thread;
 
 class ReplyController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -75,7 +79,8 @@ class ReplyController extends Controller
      */
     public function update(Request $request, Reply $reply)
     {
-        //
+        $this->authorize('update',$reply);
+        $reply->update(['body'=>$request->body]);
     }
 
     /**
@@ -86,6 +91,14 @@ class ReplyController extends Controller
      */
     public function destroy(Reply $reply)
     {
-        //
+
+        $this->authorize('update',$reply);
+        $reply->delete();
+
+        if(request()->expectsJson()){
+            return response(['status'=>'Reply Deleted']);
+        }
+        
+        return redirect()->back();
     }
 }

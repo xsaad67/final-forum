@@ -101,6 +101,17 @@ class ThreadsTest extends TestCase
 
         $this->assertDatabaseMissing('threads',['id'=>$thread->id]);
         $this->assertDatabaseMissing('threads',['id'=>$thread->id]);
+        
+        $this->assertDatabaseMissing('activities',[
+            'subject_id'=>$thread->id,
+            'subject_type'=>get_class($thread)
+        ]);
+
+        $this->assertDatabaseMissing('activities',[
+            'subject_id'=>$replies->id,
+            'subject_type'=>get_class($replies)
+        ]);
+
     }
 
     /** @test **/

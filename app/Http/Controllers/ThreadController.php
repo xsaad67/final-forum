@@ -63,7 +63,9 @@ class ThreadController extends Controller
         $thread->body = $request->body;
         $thread->channel_id = $request->channel_id;
         $thread->save();
-        return redirect($thread->path());
+        return redirect($thread->path())
+                ->with('flash',"Thread has been created");
+
     }
 
     /**

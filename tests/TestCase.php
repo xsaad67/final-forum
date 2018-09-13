@@ -8,9 +8,9 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    protected function signIn($user = null){
+    protected function signIn($user = null,$attributes=[]){
 
-    	$user = $user ?: create('App\User');
+    	$user = $user ?: create('App\User',$attributes);
 
     	$this->actingAs($user);
 

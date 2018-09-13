@@ -2,7 +2,8 @@
 
 
 @section('content')
-
+<thread-view :initial-replies-count="{{ $thread->replies_count }}" inline-template>
+    
 <div class="container">
     <div class="row">
         <div class="col-md-8">
@@ -17,36 +18,9 @@
                 </div>
             </div>
 
-            @foreach($replies as $reply)
-                <div class="card" style="margin-bottom:25px;">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <div> 
-                               {{$reply->owner->name}} said {{$reply->created_at->diffForHumans()}}
-                            </div>
-
-                            <div>
-                                <form method="POST" action="/replies/{{$reply->id}}/favorites">
-                                    @csrf
-                                    <button class="btn btn-primary" {{$reply->isFavorited() ? 'disabled' : ''}}>{{$reply->favoritesCount}} Favorite</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        {{$reply->body}}
-                    </div>
+            <replies :data="{{$thread->replies}}" @removed="repliesCount--"></replies>
 
 
-                </div>
-                {{$replies->links()}}
-            @endforeach
-
-          
-            
-      
-             
              @guest
                 <p class="strong text-center">Please <a href="/login">login</a> to reply</p>
              @else
@@ -69,7 +43,7 @@
 
                 <div class="card-body">
                     This thread was published at {{ $thread->created_at->diffForHumans()}} by <a href="/threads?by={{$thread->creater->name}}">{{$thread->creater->name}}</a>.
-                    and currently has {{$thread->replies_count}} {{str_plural('reply', $thread->replies_count)}}
+                    and currently has <span v-text="repliesCount"></span> replies
                 </div>
             </div>
 
@@ -78,5 +52,5 @@
 
 
 </div>
-
+</thread-view>
 @endsection

@@ -1,25 +1,10 @@
-<div class="card" style="margin-bottom:25px;">
-    <div class="card-header">
+@component('profiles.activities.activity')
 
-        <div class="d-flex justify-content-between">    
+@slot('heading')
+<a href="{{$record->subject->path()}}">{{$record->subject->title}}</a> by <a href="/profiles/{{$profileUser->name}}">{{$profileUser->name}}</a>
+@endslot
+@slot('body')
+{{$record->subject->body}}
+@endslot
 
-            <div>
-                <h3>This is thread section</h3>
-            </div>
-
-            @auth
-            <div>
-            {{--     <form method="POST" action="{{$thread->path()}}">
-                    @csrf
-                    {{method_field('DELETE')}}
-                    <button class="btn btn-danger">Delete</button>
-                </form> --}}
-            </div>
-            @endauth
-        </div>
-    </div>   
-
-    <div class="card-body">
-      {{--   {{$->body}} --}}
-    </div>
-</div>
+@endcomponent

@@ -29,8 +29,11 @@ Route::delete('/thread/{channel}/{thread}','ThreadController@destroy');
 Route::post('/threads','ThreadController@store');
 Route::get('/threads/{channel}','ThreadController@index');
 Route::post('thread/{channel}/{thread}/reply','ReplyController@store');
-Route::post('/replies/{reply}/favorites','FavoriteController@store'); 
+Route::post('/replies/{reply}/favorites','FavoriteController@store');
+Route::delete('/replies/{reply}/favorites','FavoriteController@destroy');  
 Route::get('/profiles/{user}','ProfileController@show');
+Route::delete('/replies/{reply}','ReplyController@destroy');
+Route::patch('/replies/{reply}','ReplyController@update');
 
 Route::get('/users',function(){
 	return App\User::all();

@@ -14,6 +14,7 @@ class ThreadPolicy
     //This check if user is an admin and have permission
     //to perform every action
     public function before(User $user){
+        
         if($user->name === 'John Doe'){
             return true;
         }

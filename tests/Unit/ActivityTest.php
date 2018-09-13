@@ -45,6 +45,26 @@ class ActivityTest extends TestCase
 
 
 	}
+
+	/** @test **/
+	public function it_fetches_a_feed_for_user(){
+		$this->signIn();
+		$threads = create('App\Thread',['user_id'=>auth()->id()],2);
+
+		auth()->user()->activities()->first()->update(['created_at'=>\Carbon\Carbon::now()->subWeek()]);
+
+
+		$feed = \App\Activity::feed(auth()->user());
+		
+		$this->assertTrue($feed->keys()->contains(
+			\Carbon\Carbon::now()->format('d-m-Y')
+		));
+
+		$this->assertTrue($feed->keys()->contains(
+			\Carbon\Carbon::now()->subWeek()->format('d-m-Y')
+		));
+
+	}
 }
 
 ?>

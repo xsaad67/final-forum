@@ -3,13 +3,16 @@
 @section('content')
 	
 	<div class="container">
-		<h2 class="page-header">{{$profileUser->name}} <span class="lead">Since {{$profileUser->created_at->diffForHumans()}}</span></h2> 
+		<h2 class="page-header">{{$profileUser->name}} </h2> 
 		<hr>
 
-		<h3 class="text-center">All Threads</h3>
+		@foreach($activites as $date => $activity)
+		  <h3 class="text-center">{{$date}}</h3>
+		
+		@foreach($activity as $record)
+			@include('profiles.activities.'.$record->type)
+		@endforeach
 
-		@foreach($profileUser->activities as $activity)
-		  @include('profiles.activities.'.$activity->type)
 		@endforeach
 
 
